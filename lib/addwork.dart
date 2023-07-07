@@ -21,7 +21,7 @@ class _AddWorkState extends State<AddWork> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple[900],
+          backgroundColor: Colors.deepPurple[800],
           title: Text(
               'Add Work',
             style: TextStyle(
