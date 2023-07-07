@@ -26,7 +26,9 @@ class _AddWorkState extends State<AddWork> {
               'Add Work',
             style: TextStyle(
               fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold
+
+              ,
             ),
           ),
           centerTitle: true,
