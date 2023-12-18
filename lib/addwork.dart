@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-List<String> todos = [
-  'apply for webops',
-  'go to shopping',
-  'complete homework'
-];
-class AddWork extends StatefulWidget {
-  const AddWork({Key? key}) : super(key: key);
+import 'main.dart';
 
+class AddWork extends StatefulWidget {
+  const AddWork({super.key});
+
+  // ({super.key});
+// <<<<<<< HEAD
   @override
   State<AddWork> createState() => _AddWorkState();
 }
