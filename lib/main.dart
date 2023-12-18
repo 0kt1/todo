@@ -32,7 +32,7 @@ class _ToDoState extends State<ToDo> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'ToDo',
             style: TextStyle(
               color: Colors.white,
@@ -42,21 +42,22 @@ class _ToDoState extends State<ToDo> {
           ),
           centerTitle: true,
           backgroundColor: Colors.deepPurple[900],
+
         ),
         body: ListView.builder(
             itemCount: todos.length,
             itemBuilder: (context, index){
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
                 child: Card(
                   child: ListTile(
                     onTap: () {},
                     title: Text(todos[index],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Bruno'
                     ),
                     ),
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.check_circle_outline_rounded,
                       color: Colors.lightBlueAccent,
                     ),
@@ -67,14 +68,16 @@ class _ToDoState extends State<ToDo> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddWork()),);
+              MaterialPageRoute(builder: (context) => const AddWork()),);
           },
-          child: Icon(
+
+
+          child: const Icon(
             Icons.add_circle,
           ),
+
         ),
         ),
       );
   }
-
 }

@@ -30,6 +30,7 @@ class _AddWorkState extends State<AddWork> {
             ),
           ),
           centerTitle: true,
+          automaticallyImplyLeading: true,
         ),
         body: Padding(
             padding: EdgeInsets.all(15),
@@ -48,7 +49,9 @@ class _AddWorkState extends State<AddWork> {
                 ElevatedButton(
                   child: Text('OK'),
                   onPressed: (){
-                    todos.add(InputController.text);
+                    setState(() {
+                      todos.add(InputController.text);
+                    });
                     print(InputController.text);
                     //print(todos[0]);
                     //print(InputController.text);
