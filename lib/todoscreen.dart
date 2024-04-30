@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:untitled/addtodo.dart';
+import 'package:untitled/edittodo.dart';
 import 'package:untitled/graphql/mutations.dart';
 import 'package:untitled/graphql/queries.dart';
 
@@ -23,6 +24,9 @@ class ToDo extends StatefulWidget {
 class _ToDoState extends State<ToDo> {
   @override
   Widget build(BuildContext context) {
+    MediaQueryData queryData;
+    queryData = MediaQuery.of(context);
+
     return Query(
         options: QueryOptions(document: gql(Queries().todos)),
         builder: (QueryResult result,
@@ -118,45 +122,105 @@ class _ToDoState extends State<ToDo> {
                             todos[index]["title"],
                             style: TextStyle(fontFamily: 'Bruno'),
                           ),
-                          leading: Icon(
-                            Icons.check_circle_outline_rounded,
-                            color: Colors.lightBlueAccent,
+                          leading: Text(
+                            "${index + 1}",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
                           ),
-                          trailing: Mutation(
-                            options: MutationOptions(
-                                document: gql(Mutations().toggleTodo),
-                                onCompleted: (dynamic resultData) {
-                                  // Navigator.of(context).pop();
-                                  // print(resultData);
-                                },
-                                onError: (dynamic resultError) {
-                                  print("resultError: $resultError");
-                                }),
-                            builder: (
-                              RunMutation runMutation,
-                              QueryResult? result,
-                            ) {
-                              if (result!.isLoading) {
-                                CircularProgressIndicator();
-                                // Show a loading indicator while the mutation is in progress
-                                // return Scaffold(
-                                //   backgroundColor: Colors.white,
-                                //     body: Center(child: CircularProgressIndicator())
-                                // );
-                              }
-                              ;
+                          trailing: Container(
+                            width: queryData.size.width * 0.1,
+                            child: Row(
+                              children: [
+                                Mutation(
+                                  options: MutationOptions(
+                                      document: gql(Mutations().toggleTodo),
+                                      onCompleted: (dynamic resultData) {
+                                        // Navigator.of(context).pop();
+                                        // print(resultData);
+                                      },
+                                      onError: (dynamic resultError) {
+                                        print("resultError: $resultError");
+                                      }),
+                                  builder: (
+                                    RunMutation runMutation,
+                                    QueryResult? result,
+                                  ) {
+                                    if (result!.isLoading) {
+                                      CircularProgressIndicator();
+                                      // Show a loading indicator while the mutation is in progress
+                                      // return Scaffold(
+                                      //   backgroundColor: Colors.white,
+                                      //     body: Center(child: CircularProgressIndicator())
+                                      // );
+                                    }
+                                    ;
 
-                              return IconButton(
-                                onPressed: () {
-                                  runMutation({
-                                    "toggleTodoStatusId": todos[index]['id']
-                                  });
-                                },
-                                icon: todos[index]["completed"] == true
-                                    ? Icon(Icons.check_circle_outline_outlined)
-                                    : Icon(Icons.circle_outlined),
-                              );
-                            },
+                                    return IconButton(
+                                      onPressed: () {
+                                        runMutation({
+                                          "toggleTodoStatusId": todos[index]
+                                              ['id']
+                                        });
+                                      },
+                                      icon: todos[index]["completed"] == true
+                                          ? Icon(Icons
+                                              .check_circle_outline_outlined)
+                                          : Icon(Icons.circle_outlined),
+                                    );
+                                  },
+                                ),
+                                Mutation(
+                                  options: MutationOptions(
+                                      document: gql(Mutations().deleteTodo),
+                                      onCompleted: (dynamic resultData) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ToDo()),
+                                        );
+                                        // Navigator.of(context).pop();
+                                        // print(resultData);
+                                      },
+                                      onError: (dynamic resultError) {
+                                        print("resultError: $resultError");
+                                      }),
+                                  builder: (
+                                    RunMutation runMutation,
+                                    QueryResult? result,
+                                  ) {
+                                    if (result!.isLoading) {
+                                      CircularProgressIndicator();
+                                      // Show a loading indicator while the mutation is in progress
+                                      // return Scaffold(
+                                      //   backgroundColor: Colors.white,
+                                      //     body: Center(child: CircularProgressIndicator())
+                                      // );
+                                    }
+                                    ;
+
+                                    return IconButton(
+                                      onPressed: () {
+                                        runMutation({
+                                          "deleteTaskId": todos[index]['id']
+                                        });
+                                      },
+                                      icon: Icon(Icons.delete),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditTodo(
+                                              taskid: todos[index]['id'])),
+                                    );
+                                  },
+                                  icon: Icon(Icons.edit),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

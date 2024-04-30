@@ -20,4 +20,25 @@ mutation ToggleTodoStatus(\$toggleTodoStatusId: ID!) {
 }
 
 """;
+
+  String deleteTodo = """
+
+mutation DeleteTask(\$deleteTaskId: ID!) {
+  deleteTask(id: \$deleteTaskId) {
+    title
+  }
+}
+
+
+""";
+
+  String editTodo = """
+mutation EditTask(\$editTaskId: ID!, \$title: String!) {
+  editTask(id: \$editTaskId, title: \$title) {
+    completed
+    id
+    title
+  }
+}
+""";
 }
